@@ -1,0 +1,120 @@
+{
+    "functions": [
+        {
+            "description": "Increment the cells with a given amount every second. Creates a dynamic spilled array with multiple results",
+            "id": "SUBSCRIBE",
+            "name": "SUBSCRIBE",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "The channel to subscribe to.",
+                    "name": "channel",
+                    "type": "string"
+                },
+                {
+                    "name": "datakey",
+                    "type": "any"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "number"
+            }
+        },
+        {
+            "description": "Gets the star count for a given Github repository.",
+            "id": "GETSTARCOUNT",
+            "name": "GETSTARCOUNT",
+            "parameters": [
+                {
+                    "description": "string name of Github user or organization.",
+                    "name": "userName",
+                    "type": "string"
+                },
+                {
+                    "description": "string name of the Github repository.",
+                    "name": "repoName",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "number"
+            }
+        },
+        {
+            "description": "Displays the current time once a second",
+            "id": "CLOCK",
+            "name": "CLOCK",
+            "options": {
+                "stream": true
+            },
+            "parameters": [],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Increments a value once a second.",
+            "id": "INCREMENT",
+            "name": "INCREMENT",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "Amount to increment",
+                    "name": "incrementBy",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "number"
+            }
+        },
+        {
+            "description": "Increment the cells with a given amount every second. Creates a dynamic spilled array with multiple results",
+            "id": "INCREMENTARRAY",
+            "name": "INCREMENTARRAY",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "The amount to add to the cell value on each increment.",
+                    "name": "amount",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "number"
+            }
+        },
+        {
+            "description": "Increment the cells with a given amount every second. Creates a dynamic spilled array with multiple results",
+            "id": "HISTORY",
+            "name": "HISTORY",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "The address of the source cell as we are unable to use @ requiresAddress with @ streaming",
+                    "name": "address",
+                    "type": "string"
+                },
+                {
+                    "description": "The channel to subscribe to.",
+                    "name": "n",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "number"
+            }
+        }
+    ]
+}
