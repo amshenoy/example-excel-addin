@@ -16,8 +16,9 @@ Invoke-Command { npm run build }
 
 # Copy registry file and auxiliary scripts to dist folder
 Copy-Item -Path "./export/install.ps1" -Destination "./dist"
-# Copy-Item -Path "./export/update.ps1" -Destination "./dist" # TODO
+Copy-Item -Path "./export/update.ps1" -Destination "./dist"
 Copy-Item -Path "./export/template.reg" -Destination "./dist"
+Copy-Item -Path "./export/index.html" -Destination "./dist"
 
 
 Remove-Item -Path "./docs"
