@@ -1,8 +1,8 @@
 /* global console, document, Excel, Office */
 
 Office.initialize = () => {
-    Office.context.document.settings.set('Office.AutoShowTaskpaneWithDocument', true);
-    Office.context.document.settings.saveAsync();
+    // Office.context.document.settings.set('Office.AutoShowTaskpaneWithDocument', true);
+    // Office.context.document.settings.saveAsync();
 };
 
 Office.onReady((info) => {
