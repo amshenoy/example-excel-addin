@@ -1,4 +1,5 @@
 
+# ./export.ps1 -ServerUrl "https://cake.amshenoy.com/example-excel-addin"
 
 param (
     [string]$ServerUrl
