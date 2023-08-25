@@ -19,3 +19,6 @@ Copy-Item -Path "./export/install.ps1" -Destination "./dist"
 # Copy-Item -Path "./export/update.ps1" -Destination "./dist" # TODO
 Copy-Item -Path "./export/template.reg" -Destination "./dist"
 
+
+Remove-Item -Path "./docs"
+Rename-Item -Path "./dist" -NewName "./docs"
