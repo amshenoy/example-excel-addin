@@ -45,7 +45,7 @@ Write-Host "Network Path to Shared Folder: $networkPath"
 
 
 $regTemplatePath = "./reg/TrustNetworkShareCatalog.reg"
-$regSavePath = "./activate-catalog.reg"
+$regSavePath = "./trusted-catalog.reg"
 
 $guid = [guid]::NewGuid().ToString()
 $networkPathReg = "\\\\$computerName\\$ShareName"
@@ -55,5 +55,7 @@ Copy-Item -Path $regTemplatePath -Destination $regSavePath
 (Get-Content $regSavePath) -replace '[NETWORK_SHARE]', $networkPathReg | Set-Content $regSavePath
 
 Invoke-Command { reg import $regSavePath }
+
+# TODO: Copy the trusted catalog reg file to the network folder
 
 Remove-Item -Path $regSavePath
