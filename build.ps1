@@ -5,7 +5,6 @@ param (
     [string]$ServerUrl
 )
 
-
 $distManifestPath = "./dist/manifest.xml"
 
 # Build dist folder for add-in
@@ -15,12 +14,8 @@ Invoke-Command { npm run build }
 (Get-Content $distManifestPath) -replace 'https://localhost:3000', $ServerUrl | Set-Content $distManifestPath
 
 
-# Copy registry file and auxiliary scripts to dist folder
-Copy-Item -Path "./export/install.ps1" -Destination "./dist"
-Copy-Item -Path "./export/update.ps1" -Destination "./dist"
-Copy-Item -Path "./export/template.reg" -Destination "./dist"
-Copy-Item -Path "./export/index.html" -Destination "./dist"
+# Copy auxiliary files to dist folder
+Copy-Item -Path "./export/*" -Destination "./dist" -Recurse
 
-
-Remove-Item -Path "./docs"
+Remove-Item -Path "./docs" -Recurse
 Rename-Item -Path "./dist" -NewName "./docs"
