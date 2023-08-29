@@ -40,6 +40,7 @@ Write-Host "Network Path to Shared Folder: $networkPath"
 
 ##########################################################
 # Now go to Excel and add network share to trusted catalog
+# https://learn.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins#specify-the-shared-folder-as-a-trusted-catalog
 ##########################################################
 
 
@@ -56,6 +57,6 @@ Copy-Item -Path $regTemplatePath -Destination $regSavePath
 
 Invoke-Command { reg import $regSavePath }
 
-# TODO: Copy the trusted catalog reg file to the network folder
-
+# Copy the trusted catalog reg file to the network folder
+Copy-Item -Path $regSavePath -Destination $PluginsPath
 Remove-Item -Path $regSavePath

@@ -1,5 +1,5 @@
 
-# ./export.ps1 -ServerUrl "https://cake.amshenoy.com/example-excel-addin"
+# ./build.ps1 -ServerUrl "https://cake.amshenoy.com/example-excel-addin"
 
 param (
     [string]$ServerUrl
@@ -17,5 +17,8 @@ Invoke-Command { npm run build }
 # Copy auxiliary files to dist folder
 Copy-Item -Path "./export/*" -Destination "./dist" -Recurse
 
-Remove-Item -Path "./docs" -Recurse
+if (Test-Path "./docs") {
+    Remove-Item -Path "./docs" -Recurse
+}
+
 Rename-Item -Path "./dist" -NewName "./docs"
