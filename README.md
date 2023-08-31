@@ -17,18 +17,32 @@ When running the first time, use the following to install ssl certificates:
 
 </br><hr></br>
 
-# Plugin Installation
-> Simplified process using Powershell scripts
 
-## Set `docs` folder to use GHPages (static-hosting) 
+# Publish Plugin
+> Make Add-in publicly available
 
-## Run `build.ps1` for creating `docs` folder
+### 1) Run `build.ps1` for creating `docs` folder
 
 `./build.ps1 -ServerUrl "https://amshenoy.github.io/example-excel-addin"`
 
-## Commit and Push plugin repo to Github `https://github.com/amshenoy/example-excel-addin`
+### 2) Commit and Push plugin repo to Github `https://github.com/amshenoy/example-excel-addin`
 
-## Run `https://amshenoy.github.io/example-excel-addin/install.ps1`:
+### 3) Set GHPages to use `docs` folder (static-hosting) 
+
+
+</br><hr></br>
+
+
+# Plugin Installation
+> Simplified process using Powershell scripts
+
+### 1) Setup Trusted Catalog
+
+Run `https://amshenoy.github.io/example-excel-addin/powershell/network-share.ps1`
+
+
+
+### 2) Run install script `https://amshenoy.github.io/example-excel-addin/powershell/install.ps1`:
 
 `./install.ps1 -ServerUrl "https://amshenoy.github.io/example-excel-addin" -PluginPath "C:/ExcelPlugins"`
 
@@ -49,7 +63,7 @@ Remove-Item -Path $tempFilePath -Force
 ### `install.ps1`
 - Takes the static root URL
 - Downloads the manifest
-- Moves the manifest to a plugins folder
+- Moves the manifest to a specified plugins folder
 
 
 <hr>

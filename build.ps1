@@ -2,7 +2,7 @@
 # ./build.ps1 -ServerUrl "https://cake.amshenoy.com/example-excel-addin"
 
 param (
-    [string]$ServerUrl
+    [Parameter(Mandatory)][string]$ServerUrl
 )
 
 $distManifestPath = "./dist/manifest.xml"
@@ -11,6 +11,7 @@ $distManifestPath = "./dist/manifest.xml"
 Invoke-Command { npm run build }
 
 # Update manifest.xml in the dist to replace all dev urls with prod urls
+# Or set it directly in webpack.config.js before building
 (Get-Content $distManifestPath) -replace 'https://localhost:3000', $ServerUrl | Set-Content $distManifestPath
 
 

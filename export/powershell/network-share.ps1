@@ -1,13 +1,14 @@
 
 # Only run this script once (to create Excel plugins folder)
+# ./network-share.ps1 -ShareName ExcelPlugins -PluginsPath C:/ExcelPlugins
 
 # # Define the share name and folder path
 # $ShareName = "SharedFolder"
 # $PluginsPath = "C:\Path\To\Shared\Folder"
 
 param (
-    [string]$ShareName,
-    [string]$PluginsPath
+    [Parameter(Mandatory)][string]$ShareName,
+    [Parameter(Mandatory)][string]$PluginsPath
 )
 
 # Create the shared folder if it doesn't exist
@@ -25,6 +26,8 @@ $shareParams = @{
 
 New-SmbShare @shareParams
 
+Write-Host "Creating Network Share"
+
 # Add share permissions
 $ace = New-Object System.Security.AccessControl.FileSystemAccessRule("Everyone", "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
 $securityDescriptor = Get-SmbShareAccessControl $ShareName
@@ -38,14 +41,18 @@ Write-Host "Shared Folder: $PluginsPath"
 Write-Host "Network Path to Shared Folder: $networkPath"
 
 
+Write-Host ""
+
 ##########################################################
 # Now go to Excel and add network share to trusted catalog
 # https://learn.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins#specify-the-shared-folder-as-a-trusted-catalog
 ##########################################################
 
+Write-Host "Setup Trusted Catalog for Office App"
+Write-Host "https://learn.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins#specify-the-shared-folder-as-a-trusted-catalog"
 
 
-$regTemplatePath = "./reg/TrustNetworkShareCatalog.reg"
+$regTemplatePath = "./reg/TrustNetworkShareCatalogTemplate.reg"
 $regSavePath = "./trusted-catalog.reg"
 
 $guid = [guid]::NewGuid().ToString()
