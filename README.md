@@ -1,24 +1,30 @@
 
-# Tutorial
+# Development Setup
 
-## Install the Yeoman CLI
+### Install the Yeoman CLI
 
-`npm install -g yo generator-office`
+```
+npm install -g yo generator-office
+```
 
-## Create the add-in project
-`yo office`
-`cd "My Office Add-in"`
+### Create the add-in project
+```ps1
+yo office
+cd "My Office Add-in"
+```
 
 
-## Sideloading for development testing
+### Sideloading for development testing
 When running the first time, use the following to install ssl certificates:
-`npm run dev-server`
+```ps1
+npm run dev-server
+```
 
 
 </br><hr></br>
 
 
-# Publish Plugin
+# Publish Add-In
 > Make Add-in publicly available
 
 ### 1) Run `build.ps1` for creating `docs` folder
@@ -33,37 +39,63 @@ When running the first time, use the following to install ssl certificates:
 </br><hr></br>
 
 
-# Plugin Installation
+# Add-In Installation
 > Simplified process using Powershell scripts
 
-### 1) Setup Trusted Catalog
+### 1) Setup Trusted Catalog once (if non-existent)
 
-Run `https://amshenoy.github.io/example-excel-addin/powershell/network-share.ps1`
+Only one catalog is needed for all Office addins regardles of the app type.
+Therefore probably better to name the folder and share as `OfficeAddins`.
 
-
-
-### 2) Run install script `https://amshenoy.github.io/example-excel-addin/powershell/install.ps1`:
-
-`./install.ps1 -ServerUrl "https://amshenoy.github.io/example-excel-addin" -PluginPath "C:/ExcelPlugins"`
-
-Or something like this:
-`Invoke-Expression (Invoke-WebRequest -Uri "https://amshenoy.github.io/example-addin/install.ps1").Content`
-
-Alternative:
 ```ps1
-$url = "https://example.com/path/to/your/script.ps1"
-$tempFilePath = [System.IO.Path]::GetTempFileName() + ".ps1"
-
-Invoke-WebRequest -Uri $url -OutFile $tempFilePath
-Invoke-Expression (Get-Content -Path $tempFilePath -Raw)
-Remove-Item -Path $tempFilePath -Force
+./network-share.ps1 -ShareName ExcelAddins -PluginsPath C:\ExcelAddins
 ```
 
+OR
+
+```ps1
+# User Specific
+$shareName = "ExcelAddins"
+$installPath = "C:\ExcelAddins"
+
+# Add-in Agnostic
+$serverUrl = "https://amshenoy.github.io/example-excel-addin"
+$scriptParams = @{ShareName = $shareName; PluginsPath = $installPath}
+$scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri ($serverUrl + "/powershell/network-share.ps1")).Content)
+& ([Scriptblock]::Create($scriptContent)) @scriptParams
+```
+
+</br>
+
+### 2) Run install script for add-in
 
 ### `install.ps1`
-- Takes the static root URL
-- Downloads the manifest
-- Moves the manifest to a specified plugins folder
+- Downloads the manifest from server
+- Moves the manifest with a specific addin name to the plugins folder
+
+The above could be done manually but a script is always neater.
+
+</br>
+
+```ps1
+./install.ps1 -ServerUrl "https://amshenoy.github.io/example-excel-addin" -PluginsPath "C:\ExcelAddins" -AddinName "ExampleExcelAddin"
+```
+
+OR
+```ps1
+# User Specific
+$installPath = "C:\ExcelAddins"
+
+# Add-in Specific
+$addinName = "ExampleExcelAddin"
+$serverUrl = "https://amshenoy.github.io/example-excel-addin"
+                                
+# Add-in Agnostic
+$scriptParams = @{ServerUrl = $serverUrl; PluginsPath = $installPath; AddinName = $addinName}
+$scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri ($serverUrl + "/powershell/install.ps1")).Content)
+& ([Scriptblock]::Create($scriptContent)) @scriptParams
+```
+
 
 
 <hr>

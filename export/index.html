@@ -76,14 +76,10 @@
             <p>Enhance your Excel experience today!</p>
             <a href="#" class="download-button">Download Add-In</a>
             <pre>
-                # User Specific
                 $installPath = "C:\ExcelAddins"
-                
-                # Add-in Specific
                 $addinName = "ExampleExcelAddin"
                 $serverUrl = "https://amshenoy.github.io/example-excel-addin"
-                                                
-                # Add-in Agnostic
+
                 $scriptParams = @{ServerUrl = $serverUrl; PluginsPath = $installPath; AddinName = $addinName}
                 $scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri ($serverUrl + "/powershell/install.ps1")).Content)
                 & ([Scriptblock]::Create($scriptContent)) @scriptParams
@@ -94,11 +90,9 @@
             <h2>Network Catalog Setup</h2>
             <p>Needs to be done only once. (Note that one catalog will work for all Office apps.)</p>
             <pre>
-                # User Specific
                 $shareName = "ExcelAddins"
                 $installPath = "C:\ExcelAddins"
-                
-                # Add-in Agnostic
+
                 $serverUrl = "https://amshenoy.github.io/example-excel-addin"
                 $scriptParams = @{ShareName = $shareName; PluginsPath = $installPath}
                 $scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri ($serverUrl + "/powershell/network-share.ps1")).Content)
