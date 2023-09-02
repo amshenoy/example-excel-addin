@@ -51,30 +51,21 @@ Write-Host ""
 Write-Host "Setup Trusted Catalog for Office App"
 Write-Host "https://learn.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins#specify-the-shared-folder-as-a-trusted-catalog"
 
-
-# $regTemplatePath = "./reg/TrustNetworkShareCatalogTemplate.reg"
-$regSavePath = "./trusted-catalog.reg"
-
 $guid = [guid]::NewGuid().ToString()
 $networkPathReg = "\\\\$computerName\\$ShareName"
-
-# Invoke-WebRequest -Uri $regTemplateUrl -OutFile $regSavePath
-# Copy-Item -Path $regTemplatePath -Destination $regSavePath
 
 # ./reg/TrustNetworkShareCatalogTemplate.reg
 $regContent = @"
 Windows Registry Editor Version 5.00
 
-[HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs\{[GUID]}]
-"Id"="{[GUID]}"
-"Url"="{[NETWORK_SHARE]}"
+[HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs\{$guid}]
+"Id"="{$guid}"
+"Url"="{$networkPathReg}"
 "Flags"=dword:00000001
 "@
 
+$regSavePath = "./trusted-catalog.reg"
 $regContent | Set-Content -Path $regSavePath
-
-(Get-Content $regSavePath) -replace '[GUID]', $guid | Set-Content $regSavePath
-(Get-Content $regSavePath) -replace '[NETWORK_SHARE]', $networkPathReg | Set-Content $regSavePath
 
 Invoke-Command { reg import $regSavePath }
 
