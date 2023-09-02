@@ -31,19 +31,10 @@ if (net share | Select-String -Pattern $ShareName) {
 # Print network path
 $computerName = $env:COMPUTERNAME
 $networkPath = "\\$computerName\$ShareName"
+Write-Host ""
 Write-Host "Shared Folder: $PluginsPath"
 Write-Host "Network Path to Shared Folder: $networkPath"
-
-
 Write-Host ""
-
-##########################################################
-# Now go to Excel and add network share to trusted catalog
-# https://learn.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins#specify-the-shared-folder-as-a-trusted-catalog
-##########################################################
-
-Write-Host "Setup Trusted Catalog for Office App"
-Write-Host "https://learn.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins#specify-the-shared-folder-as-a-trusted-catalog"
 
 $guid = [guid]::NewGuid().ToString()
 $networkPathReg = "\\\\$computerName\\$ShareName"
@@ -66,3 +57,14 @@ Invoke-Command { reg import $regSavePath }
 # Copy the trusted catalog reg file to the network folder
 Copy-Item -Path $regSavePath -Destination $PluginsPath
 Remove-Item -Path $regSavePath
+
+Write-Host ""
+Write-Host "Created trusted catalog for the network share"
+Write-Host ""
+
+Write-Host "Now go to the corresponding Office app and add the network share to the trusted catalog:"
+Write-Host "https://learn.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins#specify-the-shared-folder-as-a-trusted-catalog"
+Write-Host ""
+
+Set-Clipboard -Value $networkPath
+Write-Host "Network path '$networkPath' has been copied to clipboard"
