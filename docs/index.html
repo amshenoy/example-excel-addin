@@ -75,6 +75,18 @@
             <h2>Download Now</h2>
             <p>Enhance your Excel experience today!</p>
             <a href="#" class="download-button">Download Add-In</a>
+            <pre>
+                # User Specific
+                $installPath = "C://ExcelAddins"
+                
+                # Add-in Specific
+                $pluginUrl = "https://amshenoy.github.io/example-excel-addin"
+                $addinName = "ExampleExcelAddin"
+                
+                # Add-in Agnostic
+                $scriptArgs = $pluginUrl, $installPath, $addinName
+                Invoke-Expression ((Invoke-WebRequest -Uri $pluginUrl "/powershell/install.ps1").Content) -ArgumentList $scriptArgs
+            </pre>
         </section>
     </main>
 

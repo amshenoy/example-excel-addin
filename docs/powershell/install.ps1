@@ -1,5 +1,5 @@
 # Set-ExecutionPolicy Unrestricted
-# ./install.ps1 -ServerUrl "https://amshenoy.github.io/example-excel-addin" -PluginsPath "C://excel-plugins-js" -AddinName Streamer
+# ./install.ps1 -ServerUrl "https://amshenoy.github.io/example-excel-addin" -PluginsPath "C://excel-plugins-js" -AddinName "Streamer"
 
 # Note: This is a generic install script and will work for any valid plugin host server
 # We could make this specific to our plugin by setting a constant ServerUrl and AddinName
