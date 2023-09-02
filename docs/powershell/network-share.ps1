@@ -42,7 +42,6 @@ Write-Host ""
 $guid = [guid]::NewGuid().ToString()
 $networkPathReg = "\\\\$computerName\\$ShareName"
 
-# ./reg/TrustNetworkShareCatalogTemplate.reg
 $regContent = @"
 Windows Registry Editor Version 5.00
 

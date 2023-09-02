@@ -1,8 +1,0 @@
-Windows Registry Editor Version 5.00
-
-; Replace '['GUID']' and '['NETWORK_SHARE']' without the quotes. The enclosing {} symbols should remain.
-
-[HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs\{[GUID]}]
-"Id"="{[GUID]}"
-"Url"="{[NETWORK_SHARE]}"
-"Flags"=dword:00000001

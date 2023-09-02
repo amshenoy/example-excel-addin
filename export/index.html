@@ -77,24 +77,39 @@
             <a href="#" class="download-button">Download Add-In</a>
             <pre>
                 # User Specific
-                $installPath = "C://ExcelAddins"
+                $installPath = "C:\ExcelAddins"
                 
                 # Add-in Specific
-                $pluginUrl = "https://amshenoy.github.io/example-excel-addin"
                 $addinName = "ExampleExcelAddin"
+                $serverUrl = "https://amshenoy.github.io/example-excel-addin"
+                                                
+                # Add-in Agnostic
+                $scriptParams = @{ServerUrl = $serverUrl; PluginsPath = $installPath; AddinName = $addinName}
+                $scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri ($serverUrl + "/powershell/install.ps1")).Content)
+                & ([Scriptblock]::Create($scriptContent)) @scriptParams
+            </pre>
+        </section>
 
-                # Invoke-Expression cmdlet doesn't accept named parameters directly.
-                # To pass named parameters to the script we're invoking, we need to use the call operator (&) and splatting.
-                $scriptParams = @{
-                    ServerUrl = $pluginUrl
-                    PluginsPath = $installPath
-                    AddinName = $addinName
-                }
+        <section>
+            <h2>Network Catalog Setup</h2>
+            <p>Needs to be done only once. (Note that one catalog will work for all Office apps.)</p>
+            <pre>
+                # User Specific
+                $shareName = "ExcelAddins"
+                $installPath = "C:\ExcelAddins"
                 
                 # Add-in Agnostic
-                $installScript = $pluginUrl + "/powershell/install.ps1"
-                $scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri $installScript).Content)
+                $serverUrl = "https://amshenoy.github.io/example-excel-addin"
+                $scriptParams = @{ShareName = $shareName; PluginsPath = $installPath}
+                $scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri ($serverUrl + "/powershell/network-share.ps1")).Content)
                 & ([Scriptblock]::Create($scriptContent)) @scriptParams
+            </pre>
+            
+            </br>
+
+            <pre>
+                # To delete a network share
+                net share $shareName \delete
             </pre>
         </section>
     </main>
