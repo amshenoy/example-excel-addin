@@ -1,6 +1,6 @@
 
 # Only run this script once (to create Excel plugins folder)
-# ./network-share.ps1 -ShareName ExcelPlugins -PluginsPath C:/ExcelPlugins
+# ./network-share.ps1 -ShareName ExcelAddins -PluginsPath C:\ExcelAddins
 
 # # Define the share name and folder path
 # $ShareName = "SharedFolder"
@@ -16,23 +16,17 @@ if (-not (Test-Path -Path $PluginsPath -PathType Container)) {
     New-Item -Path $PluginsPath -ItemType Directory
 }
 
-# Create the network share
-$shareParams = @{
-    Name = $ShareName
-    Path = $PluginsPath
-    Description = "Shared folder for network access"
-    FullAccess = "Everyone"
-}
-
-New-SmbShare @shareParams
-
 Write-Host "Creating Network Share"
 
 # Add share permissions
-$ace = New-Object System.Security.AccessControl.FileSystemAccessRule("Everyone", "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
-$securityDescriptor = Get-SmbShareAccessControl $ShareName
-$securityDescriptor.AddAccessRule($ace)
-Set-SmbShare -Name $ShareName -FolderSecurity $securityDescriptor
+net share $ShareName=$PluginsPath /grant:Everyone,Full
+
+if (net share | Select-String -Pattern $ShareName) {
+    Write-Host "Shared folder '$ShareName' created successfully."
+} else {
+    Write-Host "Failed to create shared folder '$ShareName'. Please try again as admin..."
+    exit
+}
 
 # Print network path
 $computerName = $env:COMPUTERNAME
