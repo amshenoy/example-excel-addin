@@ -82,10 +82,19 @@
                 # Add-in Specific
                 $pluginUrl = "https://amshenoy.github.io/example-excel-addin"
                 $addinName = "ExampleExcelAddin"
+
+                # Invoke-Expression cmdlet doesn't accept named parameters directly.
+                # To pass named parameters to the script we're invoking, we need to use the call operator (&) and splatting.
+                $scriptParams = @{
+                    ServerUrl = $pluginUrl
+                    PluginsPath = $installPath
+                    AddinName = $addinName
+                }
                 
                 # Add-in Agnostic
-                $scriptArgs = $pluginUrl, $installPath, $addinName
-                Invoke-Expression ((Invoke-WebRequest -Uri $pluginUrl "/powershell/install.ps1").Content) -ArgumentList $scriptArgs
+                $installScript = $pluginUrl + "/powershell/install.ps1"
+                $scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri $installScript).Content)
+                & ([Scriptblock]::Create($scriptContent)) @scriptParams
             </pre>
         </section>
     </main>
