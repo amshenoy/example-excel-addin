@@ -28,6 +28,9 @@ if (net share | Select-String -Pattern $ShareName) {
     exit
 }
 
+# To delete a network share
+# net share $ShareName \delete
+
 # Print network path
 $computerName = $env:COMPUTERNAME
 $networkPath = "\\$computerName\$ShareName"
