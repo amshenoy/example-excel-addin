@@ -102,20 +102,6 @@ function convertToRange(data) {
 //     reference.split(':')
 // }
 
-// async function getSchema() {
-//     try {
-//         await Excel.run(async (context) => {
-//             const sheet = context.workbook.worksheets.getItem("Schema")
-//             const usedRange = sheet.getUsedRange()
-//             usedRange.load("address, values")
-
-//             await context.sync()
-//         })
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
-
 const SERVER_URL = 'ws://localhost:3001'
 var reconnectInterval = 200;
 
@@ -149,17 +135,7 @@ export function run() {
     }
 
     ws.onerror = function (event) {
-        const cellReference = 'A3'
-        const newValue = event.data
-
-        Excel.run(function (context) {
-            const sheet = context.workbook.worksheets.getActiveWorksheet()
-            const cell = sheet.getRange(cellReference)
-            cell.values = [[newValue]]
-            return context.sync()
-        }).catch(function (error) {
-            console.log(error)
-        })
+        console.log(event)
     }
 
     ws.addEventListener('close', (event) => {

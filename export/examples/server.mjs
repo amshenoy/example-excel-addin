@@ -1,5 +1,5 @@
-const http = require('http');
-const WebSocket = require('websocket').server;
+import http from 'http'
+import WebSocket from 'ws'
 
 const SetSerializer = (_key, value) => (value instanceof Set ? [...value] : value)
 
@@ -13,17 +13,17 @@ const server = http.createServer(function (request, response) {
         response.end(JSON.stringify(channels, SetSerializer))
     }
 })
-const wsServer = new WebSocket({
-    httpServer: server
-})
 
+const ws = new WebSocket.Server({
+    server: server,
+});
 
 function track(msgData) {
-    if (!(msgData.channel in channels))
-    {
+    if (!(msgData.channel in channels)) {
         channels[msgData.channel] = new Set()
     }
     channels[msgData.channel].add(msgData.action)
+    // console.log(msgData)
 }
 
 function broadcast(msgData) {
@@ -103,15 +103,28 @@ function sendCellMatrix() {
 setInterval(sendCellMatrix, 500)
 
 
-wsServer.on('request', function (request) {
-    const connection = request.accept(null, request.origin)
-    console.log('WebSocket connection established.')
-    clients.push(connection)
-    connection.on('close', function (reasonCode, description) {
-        console.log(`WebSocket connection closed: ${reasonCode} - ${description}`)
-        const index = clients.indexOf(connection)
+// ws.on('request', function (request) {
+// const connection = request.accept(null, request.origin)
+// console.log('WebSocket connection established.')
+// clients.push(connection)
+// connection.on('close', function (reasonCode, description) {
+// console.log(`WebSocket connection closed: ${reasonCode} - ${description}`)
+// const index = clients.indexOf(connection)
+// if (index !== -1) {
+// clients.splice(index, 1)
+// }
+// });
+// });
+
+ws.on('connection', (connection) => {
+    console.log('WebSocket connection established.');
+    clients.push(connection);
+
+    connection.on('close', (code, reason) => {
+        console.log(`WebSocket connection closed: ${code} - ${reason}`);
+        const index = clients.indexOf(connection);
         if (index !== -1) {
-            clients.splice(index, 1)
+            clients.splice(index, 1);
         }
     });
 });
