@@ -40,14 +40,13 @@ Write-Host "Network Path to Shared Folder: $networkPath"
 Write-Host ""
 
 $guid = [guid]::NewGuid().ToString()
-$networkPathReg = "\\\\$computerName\\$ShareName"
 
 $regContent = @"
 Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs\{$guid}]
 "Id"="{$guid}"
-"Url"="{$networkPathReg}"
+"Url"="\\\\$computerName\\$ShareName"
 "Flags"=dword:00000001
 "@
 
