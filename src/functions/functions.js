@@ -85,15 +85,21 @@ export function extract(json, key) {
 }
 
 
+// Optional parameters must use Typescript format and not be assigned in the parameter
+// https://learn.microsoft.com/en-us/office/dev/add-ins/excel/custom-functions-parameter-options?tabs=javascript
 
 /**
   * Convert JSON string to Excel range
   * @customfunction 
   * @param {string} json JSON string to parse
-  * @param {boolean} includeKeys Include object keys as headers
+  * @param {boolean} [includeKeys] Include object keys as headers
   * @return {string[][]} Dynamic range array with multiple results
   */
-export function parseJsonRange(json, includeKeys=false) {
+export function parseJsonRange(json, includeKeys) {
+    if (includeKeys == null) {
+        includeKeys = false
+    }
+
     const obj = JSON.parse(json)
     var list = obj;
     if (!Array.isArray(obj) || obj.length === 0) {
