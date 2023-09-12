@@ -24,6 +24,62 @@
             }
         },
         {
+            "description": "Fetch JSON from URL",
+            "id": "FETCHJSON",
+            "name": "FETCHJSON",
+            "parameters": [
+                {
+                    "description": "string name of Github user or organization.",
+                    "name": "url",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Parse JSON from JSON string",
+            "id": "EXTRACT",
+            "name": "EXTRACT",
+            "parameters": [
+                {
+                    "description": "JSON string to parse",
+                    "name": "json",
+                    "type": "string"
+                },
+                {
+                    "name": "key",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Convert JSON string to Excel range",
+            "id": "PARSEJSONRANGE",
+            "name": "PARSEJSONRANGE",
+            "parameters": [
+                {
+                    "description": "JSON string to parse",
+                    "name": "json",
+                    "type": "string"
+                },
+                {
+                    "description": "Include object keys as headers",
+                    "name": "includeKeys",
+                    "optional": true,
+                    "type": "boolean"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
             "description": "Gets the star count for a given Github repository.",
             "id": "GETSTARCOUNT",
             "name": "GETSTARCOUNT",

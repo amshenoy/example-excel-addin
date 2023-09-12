@@ -1,5 +1,5 @@
 
-# ./build.ps1 -ServerUrl "https://cake.amshenoy.com/example-excel-addin"
+# ./build.ps1 -ServerUrl "https://amshenoy.github.io/example-excel-addin"
 
 param (
     [Parameter(Mandatory)][string]$ServerUrl
