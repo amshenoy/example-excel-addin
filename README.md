@@ -98,4 +98,12 @@ $scriptContent = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri 
 
 
 
-<hr>
+<hr></br>
+
+
+
+If streaming functions do not work and you see green icons on streaming cells, do the following:
+
+[Understanding the Office Add-ins runtime](https://devblogs.microsoft.com/microsoft365dev/understanding-office-add-ins-runtime/)
+
+> Note: Customers on the Semi-Annual Enterprise channel of Office can expect to receive version Version 2102 in July 2021. Admins at these customers will need to take an additional step to enable the use of WebView2. They must create the registry key HKEY_CURRENT_USER\SOFTWARE\Microsoft\Office\16.0\WEF\Win32WebView2 and set its value to dword:00000001.
